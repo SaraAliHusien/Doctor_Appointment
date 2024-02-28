@@ -1,0 +1,172 @@
+﻿@model Doctor_Appointment.ViewModels.EditDayVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="container ">
+    @if (User.IsInRole("Doctor"))
+    {
+        <h4>Edit Day</h4>
+    }
+    else
+    {
+        <h4>Edit Available Days for D/ @Model.DoctorName</h4>
+    }
+<hr />
+
+    <div class="col-md-12">
+
+        <div class="col-lg-12  p-0 m-0">
+            <form class="col-12  row " asp-action="Edit">
+               
+                <div asp-validation-summary="All" class="text-danger col-12"></div>
+                <input type="hidden" asp-for="Day.Dayid" value="@Model.Day.Dayid" />
+                <input type="hidden" asp-for="Day.BookedAppointments" value="@Model.Day.BookedAppointments" />
+                <input type="hidden" asp-for="DoctorId" value="@Model.DoctorId" />
+                <input type="hidden" asp-for="DoctorName" value="@Model.DoctorName" />
+
+
+                <div class="col-12 d-flex align-content-center " >
+
+
+                    @if(Model.Day.BookedAppointments > 0)
+                    {
+                        <span class="text-danger">* this day already has booked appointment conn't changed it and start time.</span>
+                        <div class="col-lg-3 col-md-8">
+                            <div class=" row g-3 form-body d-flex justify-content-between">
+
+
+                                <div class="col-1 pt-1">
+                                    <label asp-for="Day.Date" class="control-label" id="date"> Date</label>
+                                </div>
+
+                                <div class="col-10">
+                                    <input asp-for="Day.Date" type="text" value="@Model.Day.Date.Date.ToString("dd-MM-yyyy")" class="form-control" placeholder="jhjh" disabled />
+
+                                    <input asp-for="Day.Date"  type="date"   placeholder="jhjh" hidden />
+
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-8">
+                            <div class=" row g-3 form-body d-flex justify-content-between">
+                                <div class="col-1 pt-1">
+                                    <label asp-for="Day.StartTime" class="control-label"> Start</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="time" asp-for="Day.StartTime" class="form-control" value="@Model.Day.StartTime"  disabled/>
+
+                                    <input type="time" asp-for="Day.StartTime" class="form-control" value="@Model.Day.StartTime" hidden />
+                                </div>
+                            </div>
+                          
+                            <div class="col-12">
+                                <br />
+                            </div>
+                        </div>
+                       
+                    }
+                    else
+                    {
+                        <div class="col-lg-3 col-md-8">
+                            <div class=" row g-3 form-body d-flex justify-content-between">
+
+
+                                <div class="col-1 pt-1">
+                                    <label asp-for="Day.Date" class="control-label" id="date"> Date</label>
+                                </div>
+
+                                <div class="col-10">
+                                    <input asp-for="Day.Date" asp-format="{0:yyyy-MM-dd}" type="date" class="form-control" min="@DateTime.UtcNow" placeholder="jhjh" />
+
+                                </div>
+                            </div>
+                            <span asp-validation-for="Day.Date" class="text-danger"></span>
+                            <div class="col-12">
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-8">
+                            <div class=" row g-3 form-body d-flex justify-content-between">
+                                <div class="col-1 pt-1">
+                                    <label asp-for="Day.StartTime" class="control-label"> Start</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="time" asp-for="Day.StartTime" class="form-control" value="@Model.Day.StartTime" />
+                                </div>
+                            </div>
+                            <span asp-validation-for="Day.StartTime" class="text-danger"></span>
+                            <div class="col-12">
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-8">
+                            <div class=" row g-3 form-body d-flex justify-content-between">
+                                <div class="col-1 pt-1">
+                                    <label asp-for="Day.EndTime" class="control-label"> End</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="time" asp-for="Day.EndTime" class="form-control" value="@Model.Day.EndTime" />
+                                </div>
+                            </div>
+                            <span asp-validation-for="Day.EndTime" class="text-danger"></span>
+                            <div class="col-12">
+                                <br />
+                            </div>
+                        </div>
+                    }
+                    
+
+
+
+                    <div class="col-lg-3 col-md-8">
+                        <div class=" row g-3 form-body d-flex justify-content-between">
+                            <div class="col-4 ">
+                                <label asp-for="Day.countAppointment" class="control-label"> Appointment Count</label>
+                            </div>
+                            <div class="col-7">
+                                <input type="text" asp-for="Day.countAppointment" class="form-control" />
+                            </div>
+                        </div>
+                        <span asp-validation-for="Day.countAppointment" class="text-danger"></span>
+                        <div class="col-12">
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+              
+                <div class="col-9">
+                    <br />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn  btn-round-full mt-3 " style="color:#fff ; background-color:#e12454" />
+
+                    @if (User.IsInRole("Doctor"))
+                    {
+                        <a asp-controller="DailyAvailbilities" asp-action="Index" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66">Cansel</a>
+
+                    }
+                    else
+                    {
+                        <a asp-controller="Doctors" asp-action="Details" asp-route-id="@Model.DoctorId" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66">Cansel</a>
+                    }
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

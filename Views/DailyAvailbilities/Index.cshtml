@@ -1,0 +1,124 @@
+﻿@model Doctor_Appointment.Models.Doctor
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<section class="section doctor-qualification ">
+	<div class="container">
+		@if (User.IsInRole("Admin"))
+		{
+			<div class="row">
+				<div class="col-12">
+					<h3>Exmination Days for D/ @Model.FullName</h3>
+					<div class="divider my-4"></div>
+
+					<p>
+						<a asp-action="Create" asp-controller="DailyAvailbilities" asp-route-docId="@Model.DoctorID" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66"> Add New Day<i class="icofont-ui-add"></i></a>
+
+					</p>
+					<partial name="_ExminationDayList" model="@Model.AvailableDays" />
+				</div>
+			</div>
+			<div class=" row justify-content-end">
+				<a class="btn  btn-round-full mt-3 bg-gray" asp-area="" asp-route-id="@Model.DoctorID" asp-controller="Doctors" asp-action="Details">Cansel<i class="icofont-simple-right ml-2  "></i></a>
+
+			</div>
+		}
+		@if (User.IsInRole("Doctor"))
+		{
+			<div class="row">
+				<div class="col-12">
+					<h3>Your Exmination Days </h3>
+					<div class="divider my-4"></div>
+
+					<p>
+						<a asp-action="Create" asp-controller="DailyAvailbilities" asp-route-docId="@Model.DoctorID" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66"> Add New Day<i class="icofont-ui-add"></i></a>
+
+					</p>
+					<partial name="_ExminationDayList" model="@Model.AvailableDays" />
+				</div>
+			</div>
+			<div class=" row justify-content-end">
+				@if (User.IsInRole("Doctor"))
+				{
+					<a class="btn  btn-round-full mt-3 bg-gray" asp-area=""  asp-controller="Home" asp-action="Index">Cansel<i class="icofont-simple-right ml-2  "></i></a>
+
+				}
+				else
+				{
+					<a class="btn  btn-round-full mt-3 bg-gray" asp-area="" asp-route-id="@Model.DoctorID" asp-controller="Doctors" asp-action="Details">Cansel<i class="icofont-simple-right ml-2  "></i></a>
+
+				}
+
+			</div>
+		}
+		
+	</div>
+
+	
+</section>
+
+
+@section Scripts{
+
+	<script>
+
+
+		$(document).ready(function () {
+			//delate day
+			$('.js-delete').on('click', function () {
+				var btn = $(this);
+				Swal.fire({
+
+					title: "Are you sure you want to delete this Day?",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#e12454",
+					cancelButtonColor: "#b5a8ab",
+					confirmButtonText: " Delete",
+					color: "#223a66",
+					background: "#eff0f3 ",
+
+
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
+							url: '/DailyAvailbilities/Delete',
+							data: { "DocId": @Model.DoctorID, "DayId": btn.data('id') },
+							success: function () {
+								Swal.fire({
+
+									title: "Deleted!",
+									text: "The Day deleted succesfully.",
+									icon: "success",
+									confirmButtonColor: "#b5a8ab",
+									color: "#223a66",
+									background: "#eff0f3 "
+								});
+								btn.parents('tr').animate({ 'line-height': 0 }, 1000).hide(500);
+
+							},
+							error: function () {
+								Swal.fire({
+
+									title: "Ooooops!",
+									text: "Something went wrong! insure that this day not has any booked appointment",
+									icon: "error",
+									confirmButtonColor: "#b5a8ab",
+									color: "#223a66",
+									background: "#eff0f3 "
+								});
+
+
+							}
+						});
+
+					}
+				});
+
+			});
+		
+		});
+	</script>
+}

@@ -1,0 +1,167 @@
+﻿@model Doctor_Appointment.ViewModels.AppoinmentVM
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <span class="text-white">Book your Seat</span>
+                    <h1 class="text-capitalize mb-5 text-lg">Appoinment</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="appoinment section">
+    <div class="container">
+        <div class="row">
+
+            <div class="container col-lg-12">
+                <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5 ">
+                    <h3 class="mb-2 title-color">Appointment Details</h3>
+                    
+                </div>
+            </div>
+            <div class="col-12">
+
+                <section class="section doctors">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="row ">
+                                <div class="col-md-12 d-flex justify-content-end">
+                                    <form class="row g-3 form-body d-flex justify-content-between" asp-action="Create" method="post">
+                                        <div asp-validation-summary="All" class="text-danger col-12"></div>
+                                        <div class="col-lg-5 col-md-8">
+                                            <div class="row  align-items-center">
+                                                <div class="col-3">
+                                                    
+
+
+
+                                                    <label asp-for="DocName" class="control-label"  > Doctor </label>
+                                                </div>
+                                                <div class="col">
+                                                    <input asp-for="DocName" class="form-control" disabled  value="@Model.DocName"/>
+                                                </div>
+                                            </div>
+                                            <span asp-validation-for="DocName" class="text-danger"></span>
+                                            
+                                        </div>
+                                        <div class="col-lg-6 col-md-8">
+                                            <div class="row  align-items-center">
+                                                <div class="col-3">
+                                                    <label asp-for="Price" class="control-label" > Exmination Fees </label>
+                                                </div>
+                                                <div class="col">
+                                                    <input asp-for="Price" class="form-control" disabled value="@Model.Price" />
+                                                </div>
+                                            </div>
+                                            <span asp-validation-for="Price" class="text-danger"></span>
+
+                                        </div>
+
+                                        <div class="col-lg-5 col-md-8">
+                                            <div class="row  align-items-center">
+                                                <div class="col-3">
+                                                    <label asp-for="DayId" class="control-label"> Examiniation Day </label>
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-control" asp-for="DayId" asp-items="@(new SelectList(Model.AvailableDays,"Key", "Value"))">
+                                                            @if (Model.AvailableDays.Count >= 0)
+                                                            {
+                                                            <option disabled selected hidden>
+                                                                Choose Examiniation Day
+                                                            </option>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            {
+                                                                <option disabled selected hidden>
+                                                                   No Days Availabe
+                                                                </option>
+
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <span asp-validation-for="DayId" class="text-danger"></span>
+                                            <div class="col-12">
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-8">
+                                            <div class="row  align-items-center">
+                                                <div class="col-3">
+                                                    <label asp-for="AppointmentType" class="control-label"></label>
+                                                </div>
+                                                <div class="col">
+                                                    <select asp-for="AppointmentType" class="form-control" asp-items="@(Html.GetEnumSelectList<AppointmentType>())" >
+                                                        <option disabled="disabled" selected hidden value="">
+                                                           Choose Examiniation Type
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <span asp-validation-for="AppointmentType" class="text-danger"></span>
+                                            <div class="col-12">
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class=" col-lg-5 col-md-8">
+                                            <div class="row  align-items-center">
+                                                <div class="col-3">
+                                                    <label asp-for="MedicalHistory" class="control-label">Medical History</label>
+                                                </div>
+                                                <div class="col">
+                                                    <input asp-for="MedicalHistory" class="form-control" />
+
+                                                </div>
+                                            </div>
+                                            <span asp-validation-for="MedicalHistory" class="text-danger"></span>
+                                            <div class="col-12">
+                                                <br />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12">
+                                            <br />
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <input type="submit" value="Create" class="btn  btn-round-full mt-3 " style="color:#fff ; background-color:#e12454" />
+                                            <a asp-action="Index" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66">Cansel</a>
+
+                                        </div>
+                                        <input asp-for="DocId" class="form-control" hidden value="@Model.DocId" />
+                                        <input asp-for="DocName" class="form-control" hidden value="@Model.DocName" />
+                                        <input asp-for="Price" class="form-control" hidden value="@Model.Price" />
+                                        <input asp-for="HomeExaminiation" class="form-control" hidden value="@Model.HomeExaminiation" />
+                                        <input asp-for="AvailableDays" class="form-control" hidden value="@Model.AvailableDays" />
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+       
+    </script>
+    }

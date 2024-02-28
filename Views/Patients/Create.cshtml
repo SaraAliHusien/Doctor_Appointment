@@ -1,0 +1,117 @@
+﻿@model Doctor_Appointment.Models.Patient
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container col-lg-9">
+    <div class="px-5 align-content-center">
+        <h3>Add New Doctor</h3>
+        <div class="divider mb-3"></div>
+        <hr />
+        <div class="row ">
+            <div class="col-md-12 d-flex justify-content-end">
+                <form class="row g-3 form-body d-flex justify-content-between" asp-action="Create">
+                    <div asp-validation-summary="All" class="text-danger col-12"></div>
+                    <div class="col-9"> <h6> <u>Personal Details</u> </h6></div>
+                    <div class="col-lg-5 col-md-8">
+                        <div class="row  align-items-center">
+                            <div class="col-2">
+                                <label asp-for="FullName" class="control-label"> Name</label>
+                            </div>
+                            <div class="col">
+                                <input asp-for="FullName" class="form-control" />
+                            </div>
+                        </div>
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                        <div class="col-12">
+                            <br />
+                        </div>
+                    </div>
+                    
+                  
+
+                    <div class="col-lg-5 col-md-8">
+                        <div class="row  align-items-center">
+                            <div class="col-2">
+                                <label asp-for="Age" class="control-label">  Age</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" asp-for="Age" class="form-control" />
+                            </div>
+                        </div>
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                        <div class="col-12">
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 col-md-8">
+                        <div class="row  align-items-center">
+                            <div class="col-2">
+                                <label asp-for="Gender" class="control-label"> Gender </label>
+                            </div>
+                            <div class="col">
+                                <select asp-for="Gender" class="form-control" asp-items="@(Html.GetEnumSelectList<Gender>())"></select>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                        <div class="col-12">
+                            <br />
+                        </div>
+                    </div>
+
+                   
+
+                  
+
+
+                    <div class="col-lg-5 col-md-8">
+                        <div class="row  align-items-center">
+                            <div class="col-2">
+                                <label asp-for="PhonNum" class="control-label">Phone Number</label>
+                            </div>
+                            <div class="col">
+                                <input asp-for="PhonNum" class="form-control" />
+                            </div>
+                        </div>
+                        <span asp-validation-for="PhonNum" class="text-danger"></span>
+                        <div class="col-12">
+                            <br />
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-8">
+                        <div class="row  align-items-center">
+                            <div class="col-2">
+                                <label asp-for="Address" class="control-label">Adress</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" asp-for="Address" class="form-control" />
+                            </div>
+                        </div>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                        <div class="col-12">
+                            <br />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <br />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn  btn-round-full mt-3 " style="color:#fff ; background-color:#e12454" />
+                        <a asp-action="Index" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66">Cansel</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+        </div>
+    </div>
+
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="px-5">
+    <h1> Appointments</h1>
+
+  
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Day
+                </th>
+                <th>
+                    Patient
+                </th>
+                <th>
+                    Phone 
+                </th>
+               
+                <th>
+                    Exmination Type
+                </th>
+
+                <th>
+                    Medical History
+                </th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Appoint in Model)
+            {
+                <tr>
+                    <td>
+                        @($"{Appoint.Day.Date.DayOfWeek.ToString()} , {Appoint.Day.Date.ToString("m")}")
+                    </td>
+
+                    <td>
+                        @Appoint.Patient.FullName
+
+                    </td>
+                    <td>
+                       @Appoint.Patient.PhonNum 
+                    </td>
+                    <td>
+                        @Appoint.AppointmentType
+
+                    </td>
+                    <td>
+                        @Appoint.MedicalHistory
+
+                    </td>
+                   
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,334 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model Doctor_Appointment.Models.Doctor
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<section class="page-title bg-1">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="block text-center">
+					<span class="text-white">Doctor Details</span>
+					<h1 class="text-capitalize mb-5 text-lg">@Model.FullName</h1>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section class="section doctor-single">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-md-6">
+				<div class="doctor-img-block">
+					<img src=@Model.GetImage() alt="" class="img-fluid w-100">
+
+					<div class="info-block mt-4">
+						<h4 class="mb-0">@Model.FullName</h4>
+						<p>@Model.GetSpecializationDescription()</p>
+
+						<ul class="list-inline mt-4 doctor-social-links">
+							<li class="list-inline-item"><a href="#"><i class="icofont-facebook"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="icofont-twitter"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="icofont-skype"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="icofont-linkedin"></i></a></li>
+							<li class="list-inline-item"><a href="#"><i class="icofont-pinterest"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-8 col-md-6">
+				<div class="doctor-details mt-4 mt-lg-0">
+					<h2 class="text-md">Some information about Doctor</h2>
+					<div class="divider my-4"></div>
+					<p>@Model.Description</p>
+
+					
+					<p> Degree: @Model.Degree</p>
+					<p> Gender: @Model.Gender</p>
+					<p> Specialist: @Model.Specialist</p>
+					<p>Location: @Model.Clinic_Location</p>
+					<p>Phone: @Model.Clinic_PhonNum</p>
+					<p>Price: @Model.Price</p>
+					<p>Home Examinatin: @(Model.HomeExamination?"Yes":"No")</p>
+					<div class="d-flex justify-content-end">
+					
+					@if (SignInManager.IsSignedIn(User))
+					{
+						
+
+						if (User.IsInRole("Patient"))
+						{
+							<a class="btn btn-main-2  mt-3 mr-2" asp-area="" asp-route-id="@Model.DoctorID" asp-controller="Appointments" asp-action="Create">Make an Appoinment</a>
+
+						}
+
+						if (User.IsInRole("Admin"))
+						{
+								<a class="btn   mt-3 mr-2 " asp-area="" asp-route-id="@Model.DoctorID" asp-controller="Doctors" asp-action="Edit" style="background-color:#2a497f; color:#fff">Edit</a>
+								<a class="btn btn-main-2  mt-3 mr-2 doctor-delete"  data-id="@Model.DoctorID" href="javaScript:;">Delete</a>
+
+								 
+						}
+					}
+						<a class="btn   mt-3 " asp-area="" asp-controller="Doctors" asp-action="Index" style="background-color:#eff0f3;">cCansel<i class="icofont-simple-right ml-2  "></i></a>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="pt-0 mt-0  ">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h3>Exmination Days</h3>
+				<div class="divider my-4"></div>
+
+				<p>
+					@if (User.IsInRole("Admin"))
+					{
+					<a asp-action="Create" asp-controller="DailyAvailbilities" asp-route-docId="@Model.DoctorID" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66"> Add New Day<i class="icofont-ui-add"></i></a>
+
+					}
+					
+
+				</p>
+				<partial name="_ExminationDayList" model="@Model.AvailableDays" />
+			</div>
+		</div>
+	</div>
+	
+
+		
+	
+</section>
+<div class="row">
+</div>
+<section class="section doctor-qualification gray-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="section-title">
+					<h3>My Educational Qualifications</h3>
+					<div class="divider my-4"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="edu-block mb-5">
+					<span class="h6 text-muted">Year(2005-2007) </span>
+					<h4 class="mb-3 title-color">MBBS, M.D at University of Wyoming</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi doloremque harum, mollitia, soluta maxime porro veritatis fuga autem impedit corrupti aperiam sint, architecto, error nesciunt temporibus! Vel quod, dolor aliquam!</p>
+				</div>
+
+				<div class="edu-block">
+					<span class="h6 text-muted">Year(2007-2009) </span>
+					<h4 class="mb-3 title-color">M.D. of Netherland Medical College</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi doloremque harum, mollitia, soluta maxime porro veritatis fuga autem impedit corrupti aperiam sint, architecto, error nesciunt temporibus! Vel quod, dolor aliquam!</p>
+				</div>
+			</div>
+
+			<div class="col-lg-6">
+				<div class="edu-block mb-5">
+					<span class="h6 text-muted">Year(2009-2010) </span>
+					<h4 class="mb-3 title-color">MBBS, M.D at University of Japan</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi doloremque harum, mollitia, soluta maxime porro veritatis fuga autem impedit corrupti aperiam sint, architecto, error nesciunt temporibus! Vel quod, dolor aliquam!</p>
+				</div>
+
+				<div class="edu-block">
+					<span class="h6 text-muted">Year(2010-2011) </span>
+					<h4 class="mb-3 title-color">M.D. of Canada Medical College</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi doloremque harum, mollitia, soluta maxime porro veritatis fuga autem impedit corrupti aperiam sint, architecto, error nesciunt temporibus! Vel quod, dolor aliquam!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section class="section doctor-skills">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4">
+				<h3>My skills</h3>
+				<div class="divider my-4"></div>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In architecto voluptatem alias, aspernatur voluptatibus corporis quisquam? Consequuntur, ad, doloribus, doloremque voluptatem at consectetur natus eum ipsam dolorum iste laudantium tenetur.</p>
+			</div>
+			<div class="col-lg-4">
+				<div class="skill-list">
+					<h5 class="mb-4">Expertise area</h5>
+					<ul class="list-unstyled department-service">
+						<li><i class="icofont-check mr-2"></i>International Drug Database</li>
+						<li><i class="icofont-check mr-2"></i>Stretchers and Stretcher Accessories</li>
+						<li><i class="icofont-check mr-2"></i>Cushions and Mattresses</li>
+						<li><i class="icofont-check mr-2"></i>Cholesterol and lipid tests</li>
+						<li><i class="icofont-check mr-2"></i>Critical Care Medicine Specialists</li>
+						<li><i class="icofont-check mr-2"></i>Emergency Assistance</li>
+					</ul>
+				</div>
+			</div>
+	
+
+
+
+			
+		</div>
+	</div>
+</section>
+
+@section Scripts{
+
+	<script>
+
+		
+		$(document).ready(function () {
+			//delate day
+			$('.js-delete').on('click', function () {
+				var btn = $(this);
+				Swal.fire({
+
+					title: "Are you sure you want to delete this Day?",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#e12454",
+					cancelButtonColor: "#b5a8ab",
+					confirmButtonText: " Delete",
+					color: "#223a66",
+					background: "#eff0f3 ",
+
+
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
+							url: '/DailyAvailbilities/Delete',
+							data: { "DocId": @Model.DoctorID, "DayId": btn.data('id') },
+							success: function () {
+								Swal.fire({
+
+									title: "Deleted!",
+									text: "The Day deleted succesfully.",
+									icon: "success",
+									confirmButtonColor: "#b5a8ab",
+									color: "#223a66",
+									background: "#eff0f3 "
+								});
+								btn.parents('tr').animate({ 'line-height': 0 }, 1000).hide(500);
+
+							},
+							error: function () {
+								Swal.fire({
+
+									title: "Ooooops!",
+									text: "Something went wrong!",
+									icon: "error",
+									confirmButtonColor: "#b5a8ab",
+									color: "#223a66",
+									background: "#eff0f3 "
+								});
+
+
+							}
+						});
+
+					}
+				});
+
+			});
+			//delete doctor
+			$('.doctor-delete').on('click', function () {
+				var btn = $(this);
+				Swal.fire({
+
+					title: "Are you sure you want to delete this Doctor? all his appointment will be deleted..!",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#e12454",
+					cancelButtonColor: "#b5a8ab",
+					confirmButtonText: " Delete",
+					color: "#223a66",
+					background: "#eff0f3 ",
+
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
+							url: '/Doctors/Delete/'+btn.data('id'),
+							
+							success: function () {
+								
+								// Swal.fire({
+								// 	position: "top-end",
+								// 	icon: "success",
+								// 	title: "Your work has been saved",
+								// 	showConfirmButton: false,
+								// 	timer: 1500
+								// });
+								window.location.replace("/Doctors/Index");
+								
+
+							},
+							error: function () {
+								Swal.fire({
+
+									title: "Ooooops!",
+									text: "Something went wrong!",
+									icon: "error",
+									confirmButtonColor: "#b5a8ab",
+									color: "#223a66",
+									background: "#eff0f3 "
+								});
+
+
+							}
+						});
+
+					}
+				});
+
+			});
+		});
+	</script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

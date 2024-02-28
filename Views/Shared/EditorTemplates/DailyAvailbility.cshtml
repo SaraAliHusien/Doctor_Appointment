@@ -1,0 +1,74 @@
+﻿@model Doctor_Appointment.Models.DailyAvailbility
+
+<div class="col-12 d-flex align-content-center " id="TTTop">
+
+    <div class="col-lg-3 col-md-8">
+        <div class=" row g-3 form-body d-flex justify-content-between">
+           
+
+            <div class="col-1 pt-1">
+                <label asp-for="Date" class="control-label" id="date"> Date</label>
+            </div>
+
+            <div class="col-10">
+                <input asp-for="Date" asp-format="{0:yyyy-MM-dd}" type="date" class="form-control" min="@DateTime.UtcNow" placeholder="jhjh" />
+            </div>
+        </div>
+        <span asp-validation-for="Date" class="text-danger"></span>
+        <div class="col-12">
+            <br />
+        </div>
+</div>
+<div class="col-lg-3 col-md-8">
+    <div class=" row g-3 form-body d-flex justify-content-between">
+        <div class="col-1 pt-1">
+            <label asp-for="StartTime" class="control-label"> Start</label>
+        </div>
+        <div class="col-10">
+            <input type="time" asp-for="StartTime" class="form-control" value="@Model.StartTime" />
+        </div>
+    </div>
+    <span asp-validation-for="StartTime" class="text-danger"></span>
+    <div class="col-12">
+        <br />
+    </div>
+</div>
+<div class="col-lg-3 col-md-8">
+    <div class=" row g-3 form-body d-flex justify-content-between">
+        <div class="col-1 pt-1">
+            <label asp-for="EndTime" class="control-label"> End</label>
+        </div>
+        <div class="col-10">
+            <input type="time" asp-for="EndTime" class="form-control" value="@Model.EndTime" />
+        </div>
+    </div>
+    <span asp-validation-for="EndTime" class="text-danger"></span>
+    <div class="col-12">
+        <br />
+    </div>
+</div>
+<div class="col-lg-3 col-md-8">
+    <div class=" row g-3 form-body d-flex justify-content-between">
+        <div class="col-4 ">
+            <label asp-for="countAppointment" class="control-label"> Appointment Count</label>
+        </div>
+        <div class="col-7">
+            <input type="text" asp-for="countAppointment" class="form-control" />
+        </div>
+    </div>
+    <span asp-validation-for="countAppointment" class="text-danger"></span>
+    <div class="col-12">
+        <br />
+    </div>
+</div>
+<div class="col-lg-3 col-md-8">
+    <input asp-for="Dayid" hidden value="@Model.Dayid" />
+
+    <button class="btn" style="color:red" type="button" onclick="removeEnn(this,@Model.Dayid)"><i class="bi bi-calendar2-x-fill" style="font-size:25px"></i></button>
+
+
+</div>
+
+
+
+</div>

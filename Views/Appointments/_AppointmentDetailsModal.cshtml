@@ -1,0 +1,48 @@
+﻿@model Appointment
+<div class="modal fade bd-example-modal-lg Detailsmodal" id="Detailsmodal_@Model.AppointmentID" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">Appointment Details</h3>
+                <button type="button" class="modal-close" onclick="CloseDetailsModal(@Model.AppointmentID)">
+                    <h4> <i class="bi bi-x"></i></h4>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-between align-item-center mt-40-px">
+                    <div class="col-4">
+                        <img src="@Model.Doctor.GetImage()" class=" img-thumbnail" alt="@Model.Doctor.FullName" />
+
+                    </div>
+                    <div class="col-8 ">
+                        <p></p>
+                        <p class="text-justify "> <b>Doctor : </b> @Model.Doctor.FullName</p>
+                        <p class="text-justify "> <b>Specialist : </b> @Model.Doctor.Specialist</p>
+                        <p class="text-justify "> <b>Day : </b> @($"{Model.Day.Date.DayOfWeek.ToString()} , {Model.Day.Date.ToString("m")}")</p>
+                        <p class="text-justify "> <b>Exmination Time : </b> from  @Model.Day.StartTime.ToString(@"hh\:mm")  to  @Model.Day.EndTime.ToString(@"hh\:mm") </p>
+                        <p class="text-justify "> <b>Type : </b> @Model.AppointmentType</p>
+                        <p class="text-justify "> <b>Fees : </b> @Model.Doctor.Price</p>
+
+                            @if (@Model.AppointmentType ==AppointmentType.ClinicalExaminiation)
+                            {
+                            <p class="text-justify ">
+                                <b>Clinic Location : @Model.Doctor.Clinic_Location </b>
+                            </p>
+
+                            }
+                        <p class="text-justify "> <b>Phone number : </b> @Model.Doctor.Clinic_PhonNum</p>
+                        <p class="text-justify "> <b>Medical History : </b> @Model.MedicalHistory</p>
+
+
+                        
+                       
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

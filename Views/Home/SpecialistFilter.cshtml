@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Doctor_Appointment.Models.Doctor>
+
+@{
+    ViewData["Title"] = "SpecialistFilter";
+}
+
+<h1>AllDoc</h1>
+
+
+<form method="post" action="/Home/SpecialistFilter">
+   
+    <select name="filterDoc">
+        @foreach (var spl in ViewBag.Spectialist)
+        {
+            <option value="@spl.specialist">@spl.ToString()</option>
+        }
+    </select>
+    
+    <input type="submit" value="Search" />
+</form>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Specialist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Degree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clinic_Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clinic_PhonNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HomeExamination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+         @*    <th>
+                @Html.DisplayNameFor(model => model.WatingTime)
+            </th> *@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Specialist)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Degree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Clinic_Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Clinic_PhonNum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HomeExamination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+             @*    <td>
+                    @Html.DisplayFor(modelItem => item.WatingTime)
+                </td> *@
+                <td>
+                    <a asp-action="Details" asp-controller="Doctors" asp-route-id="@item.DoctorID">Details</a> 
+                </td>
+            </tr>
+        }
+    </tbody> 
+</table>

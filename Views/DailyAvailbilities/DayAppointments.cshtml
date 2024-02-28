@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Appointment>
+
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+<div class="px-5">
+    <h1><small>@($" {Model.First().Day.Date.ToString("m")}")</small> Appointments</h1>
+    <div class="divider my-4"></div>
+
+  
+    <table class="table">
+        <thead>
+            <tr>
+               
+                <th>
+                    Patient
+                </th>
+                <th>
+                    Phone 
+                </th>
+               
+                <th>
+                    Exmination Type
+                </th>
+
+                <th>
+                    Medical History
+                </th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Appoint in Model)
+            {
+                <tr>
+                 
+
+                    <td>
+                        @Appoint.Patient.FullName
+
+                    </td>
+                    <td>
+                       @Appoint.Patient.PhonNum 
+                    </td>
+                    <td>
+                        @Appoint.AppointmentType
+
+                    </td>
+                    <td>
+                        @Appoint.MedicalHistory
+
+                    </td>
+                   
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

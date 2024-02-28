@@ -1,0 +1,49 @@
+﻿@using System.ComponentModel;
+@model IEnumerable<Doctor_Appointment.Models.Doctor>
+
+<div class="col-12 text-center  mb-5">
+    <div class="btn-group btn-group-toggle " data-toggle="buttons">
+        <label class="btn active ">
+            <input type="radio" name="shuffle-filter" value="all" checked="checked" />All Department
+        </label>
+        @{
+            foreach (Spectialist specialization in Enum.GetValues(typeof(Spectialist)))
+            {
+                DescriptionAttribute[] attributes = (DescriptionAttribute[])specialization
+                .GetType()
+                .GetField(specialization.ToString())
+                .GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+                string description = attributes.Length > 0 ? attributes[0].Description : specialization.ToString();
+
+                <label class="btn ">
+                    <input type="radio" name="shuffle-filter" value="@description" />@description
+                </label>
+            }
+        }
+    </div>
+</div>
+
+<div class="row shuffle-wrapper portfolio-gallery">
+    @{
+        foreach (var doctor in Model)
+        {
+            <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item"
+                 data-groups="[&quot;@doctor.GetSpecializationDescription()&quot;]">
+                <div class="position-relative doctor-inner-box">
+                    <div class="doctor-profile">
+                        <div class="doctor-img">
+                            <img src=@doctor.GetImage() alt="doctor-image" class="img-fluid w-100">
+                        </div>
+                    </div>
+                    <div class="content mt-3">
+                        <h4 class="mb-0"><a asp-area="" asp-controller="Doctors" asp-action="Details" asp-route-id="@doctor.DoctorID">@doctor.FullName</a></h4>
+                        <p>@doctor.GetSpecializationDescription()</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+

@@ -1,0 +1,100 @@
+﻿
+@using Doctor_Appointment.ViewModels;
+@model DailyAvilblabityVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container">
+    <h4>Add Available Days for D/ @Model.DoctorName</h4>
+    <div class="divider my-4"></div>
+
+
+    <hr />
+  <div class="col-lg-12  p-0 m-0">
+                <form class="col-12  row " asp-action="Create" id="form">
+                    <div asp-validation-summary="All" class="text-danger col-12"></div>
+                    <div class="col-12 mb-2">
+                <a class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66" href="javaScript:;" id="btnAdd"> Add Day<i class="icofont-ui-add"></i></a>
+
+            </div>
+                    <input type="hidden" asp-for="DoctorId" value="@Model.DoctorId"/>
+            <input type="hidden" asp-for="DoctorName" value="@Model.DoctorName" />
+
+          
+
+                   
+            <div id="orderItemsContainer" class="col-12">
+                @Html.EditorFor(model => model.Days)
+            </div>
+                 <div class="col-9">
+                            <br />
+                     
+                    </div>
+                   
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn  btn-round-full mt-3 " style="color:#fff ; background-color:#e12454" />
+                        <a asp-controller="Doctors" asp-action="Details"  asp-route-id="@Model.DoctorId" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66">Cansel</a>
+
+                    </div>
+                    </form>
+        </div>
+
+  
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script 
+        src="https://code.jquery.com/jquery-3.6.0.min.js" 
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript">
+        let x = 0;
+        $("#btnAdd").on('click', function () {
+            $.ajax({
+                async: true,
+                 data: $('#form').serialize(),
+                type: "POST",
+                url: '/DailyAvailbilities/AddAvailableDay/',
+                success: function (partialView) {
+                
+                    $('#orderItemsContainer').html(partialView);
+                }
+            });
+        });
+
+        function removeEnn(div) {
+
+            div.closest('#TTTop').remove();
+            // var p= div.closest('#TTTop');
+
+            // var f = $('#form').serialize();
+           
+            // console.log(p);
+
+            // $.ajax({
+            //     caches: false,
+            //     async: true,
+            //     data: $('#form').serialize(),
+            //     type: "POST",
+               
+            //     dataType: "json",
+               
+            //     url: "/DailyAvailbilities/DeleteAvailableDay/"+"fffff"  ,
+            //     success: function (partialView) {
+
+            //         $('#orderItemsContainer').html(partialView);
+            //     }
+            // });
+        }
+        
+       
+
+    </script>
+    
+}

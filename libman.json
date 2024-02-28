@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "datepicker@1.0.10",
+      "destination": "wwwroot/lib/datepicker/"
+    },
+    {
+      "library": "bootstrap-datepicker@1.10.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/"
+    },
+    {
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "js/bootstrap.min.js",
+        "js/bootstrap.bundle.js",
+        "js/bootstrap.bundle.min.js",
+        "css/bootstrap.min.css"
+      ]
+    },
+    {
+      "library": "sweetalert2@11.10.5",
+      "destination": "wwwroot/lib/sweetalert2/",
+      "files": [
+        "sweetalert2.min.js",
+        "sweetalert2.all.min.js",
+        "sweetalert2.min.css"
+      ]
+    },
+    {
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "bootstrap-icons@1.11.3",
+      "destination": "wwwroot/lib/bootstrap-icons/"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+﻿
+@model IEnumerable<Doctor_Appointment.Models.DailyAvailbility>
+
+<div class="section-title">
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					Day
+				</th>
+				<th>
+					Date
+				</th>
+				<th>
+					Start Time
+				</th>
+				<th>
+					End Time
+				</th>
+				<th>
+					Count Appointment
+				</th>
+				@if (User.IsInRole("Admin") || User.IsInRole("Doctor"))
+				{
+					<th>
+					</th>
+					<th>
+					</th>
+					<th>
+					</th>
+				}
+				
+
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var Appoint in Model)
+			{
+				<tr>
+					<td>
+						@Appoint.Date.DayOfWeek.ToString()
+					</td>
+
+
+					<td>
+						@Appoint.Date.Date.ToString("m")
+					</td>
+					<td>
+						@Appoint.StartTime.ToString(@"hh\:mm")
+
+					</td>
+					<td>
+						@Appoint.EndTime.ToString(@"hh\:mm")
+
+					</td>
+					<td>
+						@Appoint.countAppointment
+
+					</td>
+					@if(User.IsInRole("Admin") || User.IsInRole("Doctor"))
+					{
+						<td>
+
+							<a asp-controller="DailyAvailbilities" asp-action="DayAppointments" asp-route-id="@Appoint.Dayid" class="edit">Edit</a>
+
+						</td>
+						<td>
+							<a asp-controller="DailyAvailbilities" asp-action="DayAppointments" asp-route-dayId="@Appoint.Dayid" class="edit">Appointments</a>
+
+						</td>
+						<td>
+							<a href="javaScript:;" class="js-delete" data-id="@Appoint.Dayid">Delete</a>
+						</td>
+					}
+				
+
+
+
+				</tr>
+
+			}
+		</tbody>
+	</table>
+
+</div>

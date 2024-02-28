@@ -1,0 +1,145 @@
+﻿@model IEnumerable<Doctor_Appointment.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="px-5">
+<h1>Your Appointments</h1>
+    <div class="divider my-4"></div>
+
+<p>
+   <a asp-action="SelectDoctor" class="btn  btn-round-full mt-3 bg-gray btn-gray" style="color:#223a66" > Book New Appointment<i class="icofont-ui-add"></i></a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                    Doctor
+            </th>
+                <th>
+                    Spectialist
+                </th>
+                <th>
+                   Day
+                </th>
+                <th>
+                    Time
+                </th>
+                <th>
+               Exmination Type
+            </th>
+                
+            <th></th>
+                <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var Appoint in Model) {
+        <tr>
+            <td>
+              @Appoint.Doctor.FullName
+            </td>
+           
+       
+            <td>
+                        @Appoint.Doctor.Specialist
+            </td>
+            <td>
+                        @($"{Appoint.Day.Date.DayOfWeek.ToString()} , {Appoint.Day.Date.ToString("m")}")
+
+                    </td>
+                    <td>
+                        @Appoint.Day.StartTime.ToString(@"hh\:mm") To @Appoint.Day.EndTime.ToString(@"hh\:mm")
+                         
+                    </td>
+                    <td>
+                        @Appoint.AppointmentType
+
+                    </td>
+                    <td>
+                     
+                        <button type="button"   onclick="showDetailsModal(@Appoint.AppointmentID)">
+                            Details
+                        </button>
+                    </td>
+            <td>
+                        <a href="javaScript:;" class="js-delete" data-id="@Appoint.AppointmentID">Delete</a>
+            </td>
+                   
+        </tr>
+          <!-- Details Modal -->
+    <partial name="_AppointmentDetailsModal" model="@Appoint" />
+    <!-- End Details Modal -->
+}
+    </tbody>
+</table>
+  
+</div>
+@section Scripts{
+
+<script>
+
+        function showDetailsModal(id) {
+            $("#Detailsmodal_" + id).modal("show");
+
+        }
+        function CloseDetailsModal(id) {
+            $("#Detailsmodal_" + id).modal('hide');
+        }
+    $(document).ready(function () {
+
+        $('.js-delete').on('click', function () {
+            var btn = $(this);
+            Swal.fire({
+
+                title: "Are you sure you want to delete this Appointment?",
+                icon: "warning",
+                showCancelButton: true,
+                    confirmButtonColor: "#e12454",
+                    cancelButtonColor: "#b5a8ab",
+                    confirmButtonText: " Delete",
+                    color: "#223a66",
+                    background: "#eff0f3 ",
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Appointments/Delete/' + btn.data('id'),
+                            
+                            success: function () {
+                                Swal.fire({
+
+                                    title: "Deleted!",
+                                    text: "The apppointment deleted Sucessfully." ,
+                                    icon: "success",
+                                    confirmButtonColor: "#b5a8ab",
+                                    color: "#223a66",
+                                    background: "#eff0f3 "
+                                });
+                                btn.parents('tr').animate({ 'line-height': 0 }, 1000).hide(500);
+
+                            },
+                            error: function () {
+                                Swal.fire({
+
+                                    title: "Ooooops!",
+                                    text: "Something went wrong!",
+                                    icon: "error",
+                                    confirmButtonColor: "#b5a8ab",
+                                    color: "#223a66",
+                                    background: "#eff0f3 "
+                                });
+
+
+                            }
+                        });
+
+                }
+            });
+
+        });
+    });
+</script>
+}
